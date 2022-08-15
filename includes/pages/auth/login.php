@@ -1,6 +1,11 @@
 <main class="container">
     <div class="row mt-5">
         <div class="col-lg-4 col-10 mx-auto">
+            <div id="loginResponseMessage"></div>
+            <?php if (isset($_SESSION['activateAcc'])) {
+                echo "<p class='text-primary text-center'> Account reactivated. </p>";
+                unset($_SESSION['activateAcc']);
+            } ?>
             <form action="#">
                 <div class="mb-3">
                     <label for="email-login" class="mb-2">Email</label>
