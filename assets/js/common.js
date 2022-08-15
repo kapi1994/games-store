@@ -1,4 +1,4 @@
-let classes = ["fw-bold", "text-danger", "mt-3"];
+let classes = ["fw-bold", "text-danger", "mt-4"];
 
 const createErrorMessage = (elementId, classes, textMessage) => {
   let element = document.querySelector(`#${elementId}`);
