@@ -1,6 +1,12 @@
 <?php
 header("Content-type:application/json");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $reFirstLastName =
+        " /^[A-ZŠĐČĆŽ][a-zšđžčć]{3,15}(\s[A-ZČŠĐĆŽ][a-zčćšđž]{3,15})?$/";
+
+    $rePassword = "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/";
+
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
@@ -10,10 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $re_first_last_name = '';
     $re_password = '';
 
-    if ($first_name == '') {
+    if (!preg_match($reFirstLastName, $first_name)) {
         $errors[] = "First name isn't ok";
     }
-    if ($last_name == "") {
+    if (!preg_match($reFirstLastName, $last_name)) {
         $errors[] = "Last name isn't ok";
     }
 
@@ -21,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "Email isn't ok";
     }
 
-    if ($password == "") {
+    if (!preg_match($rePassword, $password)) {
         $errors[]  = "Password isn't ok";
     }
 
