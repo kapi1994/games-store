@@ -1,8 +1,4 @@
 $(document).ready(function () {
-  const re_email = "";
-  const re_password = "";
-  const re_first_last_name = "";
-
   $("#btnLogin").click(function (e) {
     e.preventDefault();
     loginFormValidation();
@@ -14,19 +10,24 @@ $(document).ready(function () {
   });
 });
 
+const reFirstLastName =
+  /^[A-ZŠĐČĆŽ][a-zšđžčć]{3,15}(\s[A-ZČŠĐĆŽ][a-zčćšđž]{3,15})?$/;
+const reEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const rePassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
 //  ? dodati regularne izraze i validaciju sa njima
 const loginFormValidation = () => {
   let email = document.querySelector("#email-login").value;
   let password = document.querySelector("#password-login").value;
 
   let errors = [];
-  if (email == "") {
+  if (!reEmail.test(email)) {
     errors.push("Email isn't ok");
     createErrorMessage("email-login-error", classes, "Email isn't ok");
   } else {
     removeErrorMessage("email-login-error", classes);
   }
-  if (password == "") {
+  if (!rePassword.test(password)) {
     errors.push("Password isn't ok");
     createErrorMessage("password-login-error", classes, "Password isn't ok");
   } else {
@@ -47,7 +48,11 @@ const loginFormValidation = () => {
         }
       },
       error: (jqXHR, statustTxt, xhr) => {
-        console.log(jqXHR);
+        createResponseMessage(
+          "danger",
+          jqXHR.responseJSON,
+          "loginResponseMessage"
+        );
       },
     });
   }
@@ -62,7 +67,7 @@ const registerFormValidation = () => {
 
   let errors = [];
 
-  if (first_name == "") {
+  if (!reFirstLastName.test(first_name)) {
     errors.push("First name isnt' ok");
     createErrorMessage(
       "first-name-register-error",
@@ -73,7 +78,7 @@ const registerFormValidation = () => {
     removeErrorMessage("first-name-register-error", classes);
   }
 
-  if (last_name == "") {
+  if (!reFirstLastName.test(last_name)) {
     errors.push("Last name isn't ok");
     createErrorMessage(
       "last-name-register-error",
@@ -84,14 +89,14 @@ const registerFormValidation = () => {
     removeErrorMessage("last-name-register-error", classes);
   }
 
-  if (email == "") {
+  if (!reEmail.test(email)) {
     errors.push("Email isn't ok");
     createErrorMessage("email-register-error", classes, "Email isn't ok");
   } else {
     removeErrorMessage("email-register-error", classes);
   }
 
-  if (password == "") {
+  if (!rePassword.test(password)) {
     errors.push("Password isn't ok");
     createErrorMessage("password-register-error", classes, "Password isn't ok");
   } else {
@@ -111,7 +116,7 @@ const registerFormValidation = () => {
         createResponseMessage(
           "danger",
           jqXHR.responseJSON,
-          "passwordRegistrationError"
+          "registerResponseMessage"
         );
       },
     });
